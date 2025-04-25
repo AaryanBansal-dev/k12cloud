@@ -1,120 +1,45 @@
+// app/login/page.jsx
 "use client";
-import { FcGoogle } from "react-icons/fc";
-import PropTypes from "prop-types";
-import { useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import Link from "next/link";
 
+import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-/**
- * @typedef {Object} Signup1Props
- * @property {string} [heading]
- * @property {string} [subheading]
- * @property {Object} logo
- * @property {string} logo.url
- * @property {string} logo.src
- * @property {string} logo.alt
- * @property {string} [logo.title]
- * @property {string} [signupText]
- * @property {string} [googleText]
- * @property {string} [loginText]
- * @property {string} [loginUrl]
- */
-
-const Signup1 = ({
-  heading = "Create Account",
-  subheading = "Register to get started",
-  logo = {
-    url: "https://k12cloud.vercel.app",
-    src: "https://k12cloud.vercel.app/favicon.ico",
-    alt: "logo",
-    title: "k12cloud",
-  },
-  googleText = "Sign up with Google",
-  signupText = "Create an account",
-  loginText = "Already have an account?",
-  loginUrl = "/sign-in",
-}) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const { login } = useAuth();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
     setError("");
-    setSuccess("");
-
-    // Simple validation
-    if (!formData.name || !formData.email || !formData.password) {
-      setError("All fields are required");
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters");
-      return;
-    }
+    setIsLoading(true);
 
     try {
-      setIsSubmitting(true);
-
-      const response = await fetch("/api/auth/sign-up", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      // Check if response is actually JSON
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        // If it's not JSON, get the text and show the error
-        const textResponse = await response.text();
-        console.error("Non-JSON response:", textResponse);
-        throw new Error(
-          `Server returned non-JSON response: ${response.status} ${response.statusText}`
-        );
+      const result = await login(email, password);
+      if (!result.success) {
+        setError(result.error);
+      } else {
+        setSuccess("Login successful! Redirecting...");
       }
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.details || data.error || "Registration failed");
-      }
-
-      setSuccess("Account created successfully! Redirecting to login...");
-      // Redirect to login after 2 seconds
-      setTimeout(() => {
-        window.location.href = "/sign-in";
-      }, 2000);
     } catch (err) {
-      console.error("Sign-up error:", err);
-      setError(err.message || "Something went wrong. Please try again.");
+      setError("An unexpected error occurred");
     } finally {
-      setIsSubmitting(false);
+      setIsLoading(false);
     }
-  };
+  }
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
@@ -128,19 +53,19 @@ const Signup1 = ({
             {/* Card Header */}
             <div className="flex flex-col items-center mb-8">
               <div className="mb-4 p-2 rounded-full bg-blue-50">
-                <a href={logo.url}>
+                <a href="https://k12cloud.vercel.app">
                   <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    title={logo.title}
+                    src="https://k12cloud.vercel.app/favicon.ico"
+                    alt="logo"
+                    title="k12cloud"
                     className="h-14 w-14"
                   />
                 </a>
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">{heading}</h1>
-              {subheading && (
-                <p className="text-sm text-gray-500 mt-1">{subheading}</p>
-              )}
+              <h1 className="text-2xl font-bold text-gray-900">Welcome Back</h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Sign in to your account
+              </p>
             </div>
 
             {/* Alerts */}
@@ -181,66 +106,57 @@ const Signup1 = ({
             )}
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Full Name
-                </label>
-                <Input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="John Doe"
-                  required
-                  className="w-full rounded-lg"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </div>
-
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
               <div>
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Email Address
+                  Email
                 </label>
                 <Input
-                  type="email"
                   id="email"
                   name="email"
-                  placeholder="your@email.com"
+                  type="email"
+                  autoComplete="email"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full rounded-lg"
-                  value={formData.email}
-                  onChange={handleChange}
+                  placeholder="your@email.com"
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Password
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Password
+                  </label>
+                  <Link
+                    href="#"
+                    className="text-xs font-medium text-blue-600 hover:text-blue-500"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
                 <div className="relative">
                   <Input
-                    type={showPassword ? "text" : "password"}
                     id="password"
                     name="password"
-                    placeholder="••••••••"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="current-password"
                     required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     className="w-full rounded-lg pr-10"
-                    value={formData.password}
-                    onChange={handleChange}
+                    placeholder="••••••••"
                   />
                   <button
                     type="button"
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer"
+                    className="absolute right-3 top-1/2 cursor-pointer -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
                     onClick={togglePasswordVisibility}
                     aria-label={
                       showPassword ? "Hide password" : "Show password"
@@ -253,17 +169,14 @@ const Signup1 = ({
                     )}
                   </button>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  Must be at least 6 characters
-                </p>
               </div>
 
               <Button
                 type="submit"
                 className="w-full py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium cursor-pointer text-sm mt-2"
-                disabled={isSubmitting}
+                disabled={isLoading}
               >
-                {isSubmitting ? (
+                {isLoading ? (
                   <span className="flex items-center justify-center">
                     <svg
                       className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
@@ -285,10 +198,10 @@ const Signup1 = ({
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    Creating account...
+                    Signing in...
                   </span>
                 ) : (
-                  signupText
+                  "Sign In"
                 )}
               </Button>
 
@@ -306,22 +219,22 @@ const Signup1 = ({
               <Button
                 type="button"
                 variant="outline"
-                className="w-full py-2.5 cursor-pointer rounded-lg border border-gray-200 hover:bg-gray-50 text-sm font-medium"
-                disabled={isSubmitting}
+                className="w-full py-2.5 rounded-lg border cursor-pointer border-gray-200 hover:bg-gray-50 text-sm font-medium"
+                disabled={isLoading}
               >
                 <FcGoogle className="mr-2 size-5" />
-                {googleText}
+                Google
               </Button>
             </form>
 
             {/* Footer */}
             <div className="mt-8 text-center text-sm text-gray-500">
-              <span>{loginText} </span>
+              <span>Don't have an account? </span>
               <Link
-                href={loginUrl}
+                href="/sign-up"
                 className="font-medium text-blue-600 hover:text-blue-500"
               >
-                Sign in
+                Sign up
               </Link>
             </div>
           </div>
@@ -329,22 +242,4 @@ const Signup1 = ({
       </div>
     </section>
   );
-};
-
-// Define PropTypes for the component
-Signup1.propTypes = {
-  heading: PropTypes.string,
-  subheading: PropTypes.string,
-  logo: PropTypes.shape({
-    url: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    alt: PropTypes.string.isRequired,
-    title: PropTypes.string,
-  }),
-  signupText: PropTypes.string,
-  googleText: PropTypes.string,
-  loginText: PropTypes.string,
-  loginUrl: PropTypes.string,
-};
-
-export { Signup1 };
+}
