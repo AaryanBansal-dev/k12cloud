@@ -33,7 +33,7 @@ const Hero1 = ({
               {buttons.primary && (
                 <Button
                   asChild
-                  className="bg-primary text-sm md:text-base"
+                  className="bg-blue-600 hover:bg-blue-700 text-sm md:text-base"
                   size="lg"
                 >
                   <a href={buttons.primary.url}>{buttons.primary.text}</a>

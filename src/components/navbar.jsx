@@ -29,7 +29,9 @@ const Navbar = () => {
             </Button>
           </Link>
           <Link href="/signup">
-            <Button className="font-medium cursor-pointer">Sign Up</Button>
+            <Button className="font-medium cursor-pointer bg-blue-600 hover:bg-blue-700">
+              Sign Up
+            </Button>
           </Link>
         </div>
       </div>
