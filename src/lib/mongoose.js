@@ -27,14 +27,21 @@ async function dbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-      connectTimeoutMS: 30000,
+      // Connection timeout settings
+      connectTimeoutMS: 20000,
       socketTimeoutMS: 45000,
-      serverSelectionTimeoutMS: 60000,
-      maxIdleTimeMS: 120000,
+      serverSelectionTimeoutMS: 30000,
+
+      // Keep connections alive longer
+      maxIdleTimeMS: 60000,
+
+      // Better connection management
       minPoolSize: 5,
       maxPoolSize: 10,
-      family: 4, // Force IPv4
-      // Removed all TLS specific options to use MongoDB defaults
+
+      // Retry options - important for production environments
+      retryWrites: true,
+      retryReads: true,
     };
 
     cached.promise = mongoose
