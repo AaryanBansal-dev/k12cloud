@@ -1,15 +1,29 @@
 import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
+// Get the MongoDB URI from environment variables
+let uri = process.env.MONGODB_URI;
+
+// Add explicit TLS version if not already present
+if (uri && !uri.includes("tlsVersion=")) {
+  uri += uri.includes("?") ? "&tlsVersion=TLS1_2" : "?tlsVersion=TLS1_2";
+}
+
+// Updated connection options with explicit TLS settings
 const options = {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
+  // Remove deprecated options that show warnings
+  // useUnifiedTopology and useNewUrlParser are no longer needed in MongoDB driver v4+
   connectTimeoutMS: 30000, // Increase connection timeout to 30 seconds
   socketTimeoutMS: 45000, // Increase socket timeout to 45 seconds
   serverSelectionTimeoutMS: 60000, // Increase server selection timeout to 60 seconds
   maxIdleTimeMS: 120000, // Keep idle connections open for longer
-  // DNS retry options
   family: 4, // Force IPv4
+  ssl: true,
+  tls: true,
+  tlsAllowInvalidCertificates: false,
+  tlsInsecure: false,
+  tlsAllowInvalidHostnames: false,
+  minPoolSize: 5, // Maintain at least 5 connections
+  maxPoolSize: 10, // Limit max connections to 10
 };
 
 let client;
