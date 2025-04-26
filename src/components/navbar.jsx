@@ -2,10 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 const Navbar = () => {
   return (
-    <nav className="border-b bg-white sticky top-0 z-50">
+    <nav className="border-b bg-white dark:bg-gray-900 dark:border-gray-800 sticky top-0 z-50">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo on the left */}
         <div className="flex items-center">
@@ -22,6 +23,7 @@ const Navbar = () => {
 
         {/* Auth buttons on the right */}
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           {/* The navbar uses standard ShadCN Button components */}
           <Link href="/signin">
             <Button variant="outline" className="font-medium cursor-pointer">

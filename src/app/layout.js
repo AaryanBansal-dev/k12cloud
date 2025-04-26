@@ -1,4 +1,6 @@
 import { AuthProvider } from "@/context/AuthContext";
+import { ThemeProvider } from "next-themes";
+import { ThemeScript } from "./theme-script";
 import "./globals.css";
 
 export const metadata = {
@@ -10,8 +12,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+      </head>
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <AuthProvider>{children}</AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

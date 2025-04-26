@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 const Sidebar = () => {
   const [sidebarToggled, setSidebarToggled] = useState(false);
@@ -31,22 +32,23 @@ const Sidebar = () => {
         data-sidebar
         className={`fixed h-[100dvh] py-3 overflow-hidden lg:static w-11/12 max-w-[18rem] md:w-72 transition-all ${
           sidebarToggled ? "translate-x-0" : "-translate-x-full"
-        } lg:-translate-x-0 bg-white dark:bg-gray-950 shadow-lg shadow-gray-200/40 dark:shadow-gray-800/10 flex flex-col justify-between px-4 lg:transition-none ease-linear`}
+        } lg:-translate-x-0 bg-white dark:bg-gray-900 shadow-lg shadow-gray-200/40 dark:shadow-gray-800/40 flex flex-col justify-between px-4 lg:transition-none ease-linear`}
       >
-        <div className="min-h-max py-2 border-b border-b-gray-100 dark:border-b-gray-900">
+        <div className="min-h-max py-2 border-b border-b-gray-100 dark:border-b-gray-800 flex items-center justify-between">
           <Link
             href="#"
             className="flex items-center gap-x-3 font-semibold text-gray-800 dark:text-gray-200"
           >
             <Image src="/favicon.ico" alt="alt" width={30} height={30} />
           </Link>
+          <ThemeToggle />
         </div>
         <nav className="flex-1 pt-6">
           <ul className="text-gray-700 dark:text-gray-300 space-y-3">
             <li className="relative before:absolute before:-left-4 before:w-1.5 before:h-4/5 before:rounded-r-md before:top-1/2 before:-translate-y-1/2 before:bg-blue-600">
               <Link
                 href="#"
-                className="flex items-center px-4 py-2.5 gap-x-3 text-blue-600 bg-gray-50 dark:bg-gray-900/80 rounded-md"
+                className="flex items-center px-4 py-2.5 gap-x-3 text-blue-600 bg-gray-50 dark:bg-gray-800/80 rounded-md"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -72,9 +74,9 @@ const Sidebar = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   class="lucide lucide-utensils-crossed-icon lucide-utensils-crossed"
                 >
                   <path d="m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8" />
@@ -94,9 +96,9 @@ const Sidebar = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   class="lucide lucide-bus-icon lucide-bus"
                 >
                   <path d="M8 6v6" />
@@ -119,9 +121,9 @@ const Sidebar = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   class="lucide lucide-hand-coins-icon lucide-hand-coins"
                 >
                   <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
@@ -142,9 +144,9 @@ const Sidebar = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   class="lucide lucide-phone-call-icon lucide-phone-call"
                 >
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
@@ -219,7 +221,7 @@ const Sidebar = () => {
             />
             <span
               className={`
-                            w-6 origin-center  mt-1 h-0.5 rounded-full bg-gray-300 transition-all duration-300 ease-linear
+                            w-6 origin-center mt-1 h-0.5 rounded-full bg-gray-300 transition-all duration-300 ease-linear
                             ${sidebarToggled ? "opacity-0 scale-x-0" : ""}
                         `}
             />
