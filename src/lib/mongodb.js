@@ -19,8 +19,6 @@ const options = {
   family: 4, // Force IPv4
   ssl: true,
   tls: true,
-  tlsAllowInvalidCertificates: false,
-  tlsInsecure: false,
   tlsAllowInvalidHostnames: false,
   minPoolSize: 5, // Maintain at least 5 connections
   maxPoolSize: 10, // Limit max connections to 10
