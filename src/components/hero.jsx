@@ -19,21 +19,21 @@ const Hero1 = ({
   },
 }) => {
   return (
-    <section className="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32">
-      <div className="container px-4 sm:px-6 mx-auto">
-        <div className="grid items-center gap-6 sm:gap-8 md:gap-12 lg:grid-cols-2">
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            <h1 className="my-3 sm:my-4 md:my-5 text-3xl sm:text-4xl md:text-5xl font-bold text-pretty lg:text-5xl xl:text-6xl">
+    <section className="relative bg-white dark:bg-gray-950 pt-20 pb-10 lg:pt-32 lg:pb-16">
+      <div className="container mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h1 className="text-4xl lg:text-5xl font-bold tracking-tight mb-6 dark:text-gray-50">
               {heading}
             </h1>
-            <p className="mb-5 sm:mb-6 md:mb-8 max-w-md sm:max-w-lg mx-auto lg:mx-0 text-base sm:text-lg text-muted-foreground lg:text-xl">
+            <p className="text-xl text-slate-600 mb-8 dark:text-gray-50">
               {description}
             </p>
             <div className="flex flex-col w-full sm:w-auto sm:flex-row justify-center gap-3 lg:justify-start">
               {buttons.primary && (
                 <Button
                   asChild
-                  className="bg-blue-600 hover:bg-blue-700 text-sm md:text-base"
+                  className="bg-blue-600 hover:bg-blue-700 text-sm md:text-base dark:text-gray-50"
                   size="lg"
                 >
                   <a href={buttons.primary.url}>{buttons.primary.text}</a>
@@ -43,7 +43,7 @@ const Hero1 = ({
                 <Button
                   asChild
                   variant="outline"
-                  className="text-sm md:text-base"
+                  className="text-sm md:text-base dark:text-gray-50 border-gray-300 dark:border-gray-700"
                   size="lg"
                 >
                   <a href={buttons.secondary.url}>

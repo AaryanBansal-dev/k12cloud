@@ -25,13 +25,13 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           <ThemeToggle />
           {/* The navbar uses standard ShadCN Button components */}
-          <Link href="/signin">
+          <Link href="/sign-in">
             <Button variant="outline" className="font-medium cursor-pointer">
               Sign In
             </Button>
           </Link>
-          <Link href="/signup">
-            <Button className="font-medium cursor-pointer bg-blue-600 hover:bg-blue-700">
+          <Link href="/sign-up">
+            <Button className="font-medium cursor-pointer bg-blue-600 hover:bg-blue-700 dark:text-white">
               Sign Up
             </Button>
           </Link>

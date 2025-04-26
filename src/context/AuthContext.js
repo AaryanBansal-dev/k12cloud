@@ -63,6 +63,29 @@ export function AuthProvider({ children }) {
     }
   }
 
+  // Google Sign In function
+  async function googleSignIn(token) {
+    try {
+      const res = await fetch("/api/auth/google", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.error || "Google sign in failed");
+      }
+
+      const userData = await res.json();
+      setUser(userData);
+      router.push("/dashboard");
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  }
+
   // Register function
   async function register(name, email, password) {
     try {
@@ -104,7 +127,9 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, register, logout, googleSignIn }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -171,7 +171,7 @@
 
 body {
   font-family: "Comic Relief", system-ui;
-  background-color: var(--background-950);
+  background-color: var(--background-50);
   color: var(--text-50);
 }
 

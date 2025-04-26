@@ -16,27 +16,23 @@ const Page = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading) {
-      if (user) {
-        router.push("/dashboard");
-      } else {
-        router.push("/sign-in");
-      }
+    if (!loading && user) {
+      router.push("/dashboard");
     }
   }, [user, loading, router]);
 
   // Show loading state while authentication is being checked
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
         <div className="text-center">
-          <p className="text-xl">Loading...</p>
+          <p className="text-xl text-gray-800 dark:text-gray-200">Loading...</p>
         </div>
       </div>
     );
   }
 
-  // This will render briefly while the redirect is happening
+  // This will render the landing page for unauthenticated users
   return (
     <div>
       <Navbar />

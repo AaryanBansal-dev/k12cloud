@@ -107,13 +107,13 @@ export default function IntegrationSection() {
   ];
 
   return (
-    <section id="integrations" className="py-16 bg-slate-50">
+    <section id="integrations" className="py-16 bg-slate-50 dark:bg-gray-950">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight mb-2">
+          <h2 className="text-3xl font-bold tracking-tight mb-2 dark:text-gray-50">
             Seamlessly Connects With Your Existing School Systems
           </h2>
-          <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+          <p className="text-slate-600 text-lg max-w-2xl mx-auto dark:text-gray-50">
             No more juggling between platforms. Our app integrates with the
             tools your school already uses.
           </p>
@@ -136,23 +136,27 @@ export default function IntegrationSection() {
 
           {integrationCategories.map((category) => (
             <TabsContent key={category.id} value={category.id}>
-              <Card className="hover:shadow-md transition-all duration-200">
+              <Card className="hover:shadow-md transition-all duration-200 dark:bg-gray-900 dark:border-gray-800">
                 <CardHeader>
-                  <CardTitle className="cursor-pointer">
+                  <CardTitle className="cursor-pointer dark:text-white">
                     {category.name}
                   </CardTitle>
-                  <CardDescription>{category.description}</CardDescription>
+                  <CardDescription className="dark:text-slate-300">
+                    {category.description}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div>
-                    <h4 className="text-sm font-medium mb-3">Key Features</h4>
+                    <h4 className="text-sm font-medium mb-3 dark:text-white">
+                      Key Features
+                    </h4>
                     <ul className="space-y-2">
                       {category.features.map((feature, index) => (
                         <li
                           key={index}
-                          className="flex items-start gap-2 cursor-pointer hover:text-blue-600 transition-colors"
+                          className="flex items-start gap-2 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors dark:text-slate-300"
                         >
-                          <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+                          <CheckCircle className="h-5 w-5 text-green-500 dark:text-green-400 flex-shrink-0 mt-0.5" />
                           <span className="text-sm">{feature}</span>
                         </li>
                       ))}
@@ -163,7 +167,7 @@ export default function IntegrationSection() {
                   <div className="w-full flex justify-between items-center">
                     <Badge
                       variant="outline"
-                      className="text-blue-600 bg-blue-50 cursor-pointer"
+                      className="text-blue-600 bg-blue-50 dark:bg-blue-900/30 dark:text-blue-300 cursor-pointer"
                     >
                       Easy Setup
                     </Badge>
@@ -184,11 +188,11 @@ export default function IntegrationSection() {
         <div className="mt-12 text-center">
           <Button
             size="lg"
-            className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+            className="bg-blue-600 hover:bg-blue-700 cursor-pointer dark:bg-blue-700 dark:hover:bg-blue-600"
           >
             Check Compatibility With Your Systems
           </Button>
-          <p className="text-sm text-slate-500 mt-4">
+          <p className="text-sm text-slate-500 mt-4 dark:text-slate-400">
             Not seeing your system? Contact us for custom integration options.
           </p>
         </div>

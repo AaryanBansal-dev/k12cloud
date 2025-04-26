@@ -66,8 +66,8 @@ const Footer2 = ({
   ],
 }) => {
   return (
-    <section className="py-32 pl-10">
-      <div className="container">
+    <footer className="bg-slate-900 text-white py-12 dark:bg-gray-950">
+      <div className="container mx-auto px-4">
         <footer>
           <div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
             <div className="col-span-2 mb-8 lg:mb-0">
@@ -80,17 +80,21 @@ const Footer2 = ({
                     className="h-10"
                   />
                 </a>
-                <p className="text-xl font-semibold">{logo.title}</p>
+                <p className="text-xl font-semibold dark:text-gray-50">
+                  {logo.title}
+                </p>
               </div>
             </div>
             {menuItems.map((section, sectionIdx) => (
               <div key={sectionIdx}>
-                <h3 className="mb-4 font-bold">{section.title}</h3>
+                <h3 className="mb-4 font-bold dark:text-gray-50">
+                  {section.title}
+                </h3>
                 <ul className="space-y-4 text-muted-foreground">
                   {section.links.map((link, linkIdx) => (
                     <li
                       key={linkIdx}
-                      className="font-medium hover:text-primary"
+                      className="font-medium hover:text-primary dark:text-gray-50 dark:hover:text-blue-400"
                     >
                       <a href={link.url}>{link.text}</a>
                     </li>
@@ -100,10 +104,13 @@ const Footer2 = ({
             ))}
           </div>
           <div className="mt-24 flex flex-col justify-between gap-4 border-t pt-8 text-sm font-medium text-muted-foreground md:flex-row md:items-center">
-            <p>{copyright}</p>
+            <p className="dark:text-gray-50">{copyright}</p>
             <ul className="flex gap-4">
               {bottomLinks.map((link, linkIdx) => (
-                <li key={linkIdx} className="underline hover:text-primary">
+                <li
+                  key={linkIdx}
+                  className="underline hover:text-primary dark:text-gray-50 dark:hover:text-blue-400"
+                >
                   <a href={link.url}>{link.text}</a>
                 </li>
               ))}
@@ -111,7 +118,7 @@ const Footer2 = ({
           </div>
         </footer>
       </div>
-    </section>
+    </footer>
   );
 };
 

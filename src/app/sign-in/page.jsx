@@ -1,7 +1,7 @@
 // app/login/page.jsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
@@ -9,6 +9,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -18,7 +19,24 @@ export default function LoginPage() {
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const { login } = useAuth();
+  const [clientId, setClientId] = useState("");
+  const { login, googleSignIn } = useAuth();
+
+  // Get client ID from environment variable
+  useEffect(() => {
+    // Access the client ID from window environment to ensure it's client-side only
+    const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+
+    // For debugging - remove in production
+    console.log("Google Client ID:", googleClientId ? "Found" : "Not found");
+
+    if (googleClientId) {
+      setClientId(googleClientId);
+    } else {
+      console.error("Google Client ID is not properly configured");
+      setError("Google Sign-In is not available at the moment");
+    }
+  }, []);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -43,6 +61,42 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   }
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setError("");
+    setSuccess("");
+    setIsLoading(true);
+
+    try {
+      // Log the credential for debugging - remove in production
+      console.log(
+        "Google credential received:",
+        credentialResponse ? "Yes" : "No"
+      );
+
+      if (!credentialResponse.credential) {
+        throw new Error("No credential received from Google");
+      }
+
+      const result = await googleSignIn(credentialResponse.credential);
+      if (!result.success) {
+        throw new Error(result.error || "Failed to sign in with Google");
+      }
+      // The googleSignIn function will handle redirection
+    } catch (err) {
+      console.error("Google login error:", err);
+      setError(
+        err.message || "Failed to sign in with Google. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleError = (error) => {
+    console.error("Google Sign-In Error:", error);
+    setError("Google sign-in failed. Please try again or use email login.");
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4">
@@ -242,15 +296,55 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full py-2.5 rounded-lg border cursor-pointer border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm font-medium dark:text-white"
-                disabled={isLoading}
-              >
-                <FcGoogle className="mr-2 size-5" />
-                Google
-              </Button>
+              {clientId ? (
+                <GoogleOAuthProvider clientId={clientId}>
+                  <div className="flex justify-center">
+                    <div className="w-full">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full flex items-center justify-center gap-3 py-2.5 bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-gray-800 dark:text-gray-200 font-medium transition-colors cursor-pointer"
+                        onClick={() => {
+                          // Find and click the Google login button when our custom button is clicked
+                          const googleButtons = document.querySelectorAll(
+                            '[aria-labelledby="button-label"]'
+                          );
+                          if (googleButtons && googleButtons.length > 0) {
+                            googleButtons[0].click();
+                          }
+                        }}
+                      >
+                        <FcGoogle className="size-5" />
+                        <span>Sign in with Google</span>
+                      </Button>
+                      <div
+                        style={{
+                          position: "absolute",
+                          opacity: 0,
+                          pointerEvents: "none",
+                          zIndex: -1,
+                        }}
+                      >
+                        <GoogleLogin
+                          onSuccess={handleGoogleSuccess}
+                          onError={handleGoogleError}
+                          useOneTap={false}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </GoogleOAuthProvider>
+              ) : (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full flex items-center justify-center gap-3 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 font-medium"
+                  disabled={true}
+                >
+                  <FcGoogle className="size-5" />
+                  <span>Sign in with Google (Not configured)</span>
+                </Button>
+              )}
             </form>
 
             {/* Footer */}

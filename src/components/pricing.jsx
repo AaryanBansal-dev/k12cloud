@@ -2,84 +2,97 @@ import React from "react";
 
 const Pricing4 = () => {
   return (
-    <section className="py-16 bg-white">
+    <section id="pricing" className="py-16 bg-slate-50 dark:bg-gray-950">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight mb-2">
-            Pricing Plans for Schools of All Sizes
+          <h2 className="text-3xl font-bold tracking-tight mb-2 dark:text-gray-50">
+            Simple, Transparent Pricing
           </h2>
-          <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-            Transparent pricing with no hidden fees. Choose the plan that fits
-            your school's needs.
+          <p className="text-slate-600 text-lg max-w-2xl mx-auto dark:text-gray-50">
+            Choose the perfect plan for your school's needs with no hidden fees
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {/* Basic Plan */}
-          <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
-            <h3 className="text-xl font-semibold mb-2">Basic</h3>
-            <p className="text-gray-500 mb-4">For smaller schools</p>
-            <div className="text-3xl font-bold mb-6">
+          <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer dark:border-gray-700 dark:hover:border-gray-600">
+            <h3 className="text-xl font-semibold mb-2 dark:text-gray-50">
+              Basic
+            </h3>
+            <p className="text-gray-500 mb-4 dark:text-gray-400">
+              For smaller schools
+            </p>
+            <div className="text-3xl font-bold mb-6 dark:text-gray-50">
               ₹999
-              <span className="text-lg font-normal text-gray-500">/month</span>
+              <span className="text-lg font-normal text-gray-500 dark:text-gray-400">
+                /month
+              </span>
             </div>
             <ul className="space-y-3 mb-8">
               <li className="flex items-center gap-2">
                 <span className="text-green-500">✓</span>
-                <span>Up to 250 students</span>
+                <span className="dark:text-gray-50">Up to 250 students</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-500">✓</span>
-                <span>Core notification features</span>
+                <span className="dark:text-gray-50">
+                  Core notification features
+                </span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-500">✓</span>
-                <span>Email & phone support</span>
+                <span className="dark:text-gray-50">Email & phone support</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-500">✓</span>
-                <span>Attendance tracking</span>
+                <span className="dark:text-gray-50">Attendance tracking</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-500">✓</span>
-                <span>Basic report generation</span>
+                <span className="dark:text-gray-50">
+                  Basic report generation
+                </span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-500">✓</span>
-                <span>Mobile app access</span>
+                <span className="dark:text-gray-50">Mobile app access</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-500">✓</span>
-                <span>Student profiles</span>
+                <span className="dark:text-gray-50">Student profiles</span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-500">✓</span>
-                <span>Basic homework management</span>
+                <span className="dark:text-gray-50">
+                  Basic homework management
+                </span>
               </li>
               <li className="flex items-center gap-2">
                 <span className="text-green-500">✓</span>
-                <span>5 GB cloud storage</span>
+                <span className="dark:text-gray-50">5 GB cloud storage</span>
               </li>
             </ul>
-            <button className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition cursor-pointer">
+            <button className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition cursor-pointer dark:bg-blue-700 dark:hover:bg-blue-600 dark:text-gray-50">
               Get Started
             </button>
           </div>
 
           {/* Standard Plan */}
-          <div className="border rounded-lg p-6 bg-blue-50 border-blue-200 hover:shadow-lg transition-shadow relative cursor-pointer">
+          <div className="border rounded-lg p-6 bg-gray-50  dark:bg-gray-800 border-blue-200 hover:shadow-lg transition-shadow relative cursor-pointer">
             <div className="absolute -top-3 left-0 right-0 flex justify-center">
               <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">
                 Most Popular
               </span>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Standard</h3>
+            <h3 className="text-xl font-semibold mb-2 dark:text-gray-50">
+              Standard
+            </h3>
             <p className="text-gray-500 mb-4">For medium-sized schools</p>
-            <div className="text-3xl font-bold mb-6">
+            <div className="text-3xl font-bold mb-6 dark:text-gray-50">
               ₹3999
               <span className="text-lg font-normal text-gray-500">/month</span>
             </div>
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-3 mb-8 dark:text-gray-50">
               <li className="flex items-center gap-2">
                 <span className="text-green-500">✓</span>
                 <span>Up to 750 students</span>
@@ -151,14 +164,20 @@ const Pricing4 = () => {
           </div>
 
           {/* Premium Plan */}
-          <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer">
-            <h3 className="text-xl font-semibold mb-2">Premium</h3>
-            <p className="text-gray-500 mb-4">For larger institutions</p>
-            <div className="text-3xl font-bold mb-6">
+          <div className="border rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer dark:border-gray-700 dark:hover:border-gray-600">
+            <h3 className="text-xl font-semibold mb-2 dark:text-gray-50">
+              Premium
+            </h3>
+            <p className="text-gray-500 mb-4 dark:text-gray-400">
+              For larger institutions
+            </p>
+            <div className="text-3xl font-bold mb-6 dark:text-gray-50">
               ₹9999
-              <span className="text-lg font-normal text-gray-500">/month</span>
+              <span className="text-lg font-normal text-gray-500 dark:text-gray-400">
+                /month
+              </span>
             </div>
-            <ul className="space-y-3 mb-8">
+            <ul className="space-y-3 mb-8 dark:text-gray-50">
               <li className="flex items-center gap-2">
                 <span className="text-green-500">✓</span>
                 <span>Unlimited students</span>
@@ -256,18 +275,18 @@ const Pricing4 = () => {
                 <span>Advanced data backups</span>
               </li>
             </ul>
-            <button className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition cursor-pointer">
+            <button className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition cursor-pointer dark:bg-blue-700 dark:hover:bg-blue-600 dark:text-gray-50">
               Get Started
             </button>
           </div>
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 dark:text-gray-400">
             Need a custom plan?{" "}
             <a
               href="#"
-              className="text-blue-600 hover:underline cursor-pointer"
+              className="text-blue-600 hover:underline cursor-pointer dark:text-blue-400"
             >
               Contact us
             </a>{" "}

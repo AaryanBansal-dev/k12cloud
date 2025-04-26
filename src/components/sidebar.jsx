@@ -77,7 +77,7 @@ const Sidebar = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  class="lucide lucide-utensils-crossed-icon lucide-utensils-crossed"
+                  className="lucide lucide-utensils-crossed-icon lucide-utensils-crossed"
                 >
                   <path d="m16 2-2.3 2.3a3 3 0 0 0 0 4.2l1.8 1.8a3 3 0 0 0 4.2 0L22 8" />
                   <path d="M15 15 3.3 3.3a4.2 4.2 0 0 0 0 6l7.3 7.3c.7.7 2 .7 2.8 0L15 15Zm0 0 7 7" />
@@ -99,7 +99,7 @@ const Sidebar = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  class="lucide lucide-bus-icon lucide-bus"
+                  className="lucide lucide-bus-icon lucide-bus"
                 >
                   <path d="M8 6v6" />
                   <path d="M15 6v6" />
@@ -124,7 +124,7 @@ const Sidebar = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  class="lucide lucide-hand-coins-icon lucide-hand-coins"
+                  className="lucide lucide-hand-coins-icon lucide-hand-coins"
                 >
                   <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
                   <path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
@@ -147,7 +147,7 @@ const Sidebar = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  class="lucide lucide-phone-call-icon lucide-phone-call"
+                  className="lucide lucide-phone-call-icon lucide-phone-call"
                 >
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   <path d="M14.05 2a9 9 0 0 1 8 7.94" />
