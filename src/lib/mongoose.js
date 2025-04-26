@@ -27,28 +27,18 @@ async function dbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
-      connectTimeoutMS: 30000, // Increase connection timeout to 30 seconds
-      socketTimeoutMS: 45000, // Increase socket timeout to 45 seconds
-      serverSelectionTimeoutMS: 60000, // Increase server selection timeout
-      maxIdleTimeMS: 120000, // Keep idle connections open for longer
+      connectTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+      serverSelectionTimeoutMS: 60000,
+      maxIdleTimeMS: 120000,
+      minPoolSize: 5,
+      maxPoolSize: 10,
       family: 4, // Force IPv4
-      ssl: true,
-      tls: true,
-      tlsAllowInvalidHostnames: false,
-      minPoolSize: 5, // Maintain at least 5 connections
-      maxPoolSize: 10, // Limit max connections to 10
+      // Removed all TLS specific options to use MongoDB defaults
     };
 
-    // Construct connection string with explicit TLS parameters if not already included
-    let connectionUri = MONGODB_URI;
-    if (!connectionUri.includes("tlsVersion=")) {
-      connectionUri += connectionUri.includes("?")
-        ? "&tlsVersion=TLS1_2"
-        : "?tlsVersion=TLS1_2";
-    }
-
     cached.promise = mongoose
-      .connect(connectionUri, opts)
+      .connect(MONGODB_URI, opts)
       .then((mongoose) => {
         console.log("MongoDB connected successfully");
         return mongoose;
@@ -58,7 +48,7 @@ async function dbConnect() {
         // Log redacted connection string for debugging (hiding password)
         console.error(
           "Connection URI (redacted):",
-          connectionUri?.replace(/:([^:@]+)@/, ":****@")
+          MONGODB_URI?.replace(/:([^:@]+)@/, ":****@")
         );
 
         // Check for specific DNS errors
