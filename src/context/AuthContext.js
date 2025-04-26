@@ -15,13 +15,23 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function loadUserFromSession() {
       try {
-        const res = await fetch("/api/auth/me");
+        const res = await fetch("/api/auth/me", {
+          // Add cache: 'no-store' to prevent caching issues
+          cache: "no-store",
+          credentials: "include", // Ensure cookies are sent with the request
+        });
+
         if (res.ok) {
           const userData = await res.json();
           setUser(userData);
+        } else {
+          // If there's an error, don't set the user but don't throw
+          console.log("User not authenticated or session expired");
+          setUser(null);
         }
       } catch (error) {
         console.error("Failed to load user session:", error);
+        setUser(null);
       } finally {
         setLoading(false);
       }
@@ -31,12 +41,12 @@ export function AuthProvider({ children }) {
   }, []);
 
   // Login function
-  async function login(email, password) {
+  async function login(email, password, remember = false) {
     try {
       const res = await fetch("/api/auth/sign-in", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, remember }),
       });
 
       if (!res.ok) {
@@ -66,6 +76,15 @@ export function AuthProvider({ children }) {
         const error = await res.json();
         throw new Error(error.error || "Sign up failed");
       }
+
+      // Get the user data from the response
+      const userData = await res.json();
+
+      // Set the user in the context state
+      setUser(userData);
+
+      // Redirect to dashboard
+      router.push("/dashboard");
 
       return { success: true };
     } catch (error) {

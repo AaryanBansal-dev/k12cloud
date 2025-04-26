@@ -2,8 +2,8 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
-import dbConnect from "@/lib/mongodb";
-import User from "@/lib/User";
+import dbConnect from "@/lib/mongoose";
+import User from "@/models/User";
 
 export async function GET() {
   await dbConnect();
@@ -19,8 +19,8 @@ export async function GET() {
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Get user data
-    const user = await User.findById(decoded.userId).select("-password");
+    // Get user data - using id from token (not userId)
+    const user = await User.findById(decoded.id).select("-password");
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }

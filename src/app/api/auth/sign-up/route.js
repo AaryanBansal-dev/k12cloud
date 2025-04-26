@@ -1,5 +1,7 @@
 // app/api/auth/sign-up/route.js
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 import dbConnect from "@/lib/mongoose";
 import User from "@/models/User";
 
@@ -32,6 +34,35 @@ export async function POST(request) {
       name,
       email,
       password, // Password will be hashed by pre-save hook in the User model
+    });
+
+    // Create JWT token after successful registration
+    const token = jwt.sign(
+      {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    // Calculate expiry date for persistent cookie (7 days from now)
+    const expiryDate = new Date();
+    expiryDate.setDate(expiryDate.getDate() + 7);
+
+    // Set token in HTTP-only cookie with explicit expiry date
+    // Fix: Await the cookies() API
+    const cookieStore = cookies();
+    await cookieStore.set({
+      name: "token",
+      value: token,
+      httpOnly: true,
+      path: "/",
+      secure: process.env.NODE_ENV !== "development",
+      maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
+      expires: expiryDate, // Explicit expiry date for persistent cookie
+      sameSite: "strict",
     });
 
     // Return user without password

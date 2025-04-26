@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from "next/link";
+import { useAuth } from "@/context/AuthContext"; // Import the auth context
+import { useRouter } from "next/navigation"; // Import the router
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,6 +48,8 @@ const Signup1 = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const { register } = useAuth(); // Use auth context for registration
+  const router = useRouter(); // Use router for programmatic navigation
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -78,36 +82,19 @@ const Signup1 = ({
     try {
       setIsSubmitting(true);
 
-      const response = await fetch("/api/auth/sign-up", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      // Use the register function from AuthContext instead of direct fetch
+      const result = await register(
+        formData.name,
+        formData.email,
+        formData.password
+      );
 
-      // Check if response is actually JSON
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        // If it's not JSON, get the text and show the error
-        const textResponse = await response.text();
-        console.error("Non-JSON response:", textResponse);
-        throw new Error(
-          `Server returned non-JSON response: ${response.status} ${response.statusText}`
-        );
+      if (!result.success) {
+        throw new Error(result.error || "Registration failed");
       }
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.details || data.error || "Registration failed");
-      }
-
-      setSuccess("Account created successfully! Redirecting to login...");
-      // Redirect to login after 2 seconds
-      setTimeout(() => {
-        window.location.href = "/sign-in";
-      }, 2000);
+      setSuccess("Account created successfully! Redirecting to dashboard...");
+      // The router.push will be handled by the register function in AuthContext
     } catch (err) {
       console.error("Sign-up error:", err);
       setError(err.message || "Something went wrong. Please try again.");

@@ -6,7 +6,7 @@ export async function GET() {
   const cookieStore = cookies();
 
   // Clear the auth token
-  cookieStore.set("token", "", {
+  await cookieStore.set("token", "", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     expires: new Date(0),

@@ -1,6 +1,5 @@
 // middleware.js
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 
 export function middleware(request) {
@@ -10,8 +9,8 @@ export function middleware(request) {
 
   // Check if the path is protected
   if (protectedPaths.some((prefix) => path.startsWith(prefix))) {
-    const cookieStore = cookies();
-    const token = cookieStore.get("token")?.value;
+    // Get the token from the cookie using request.cookies
+    const token = request.cookies.get("token")?.value;
 
     // If no token exists, redirect to sign-in
     if (!token) {
@@ -23,6 +22,7 @@ export function middleware(request) {
       jwt.verify(token, process.env.JWT_SECRET);
       return NextResponse.next();
     } catch (error) {
+      // If token is invalid, redirect to sign-in
       return NextResponse.redirect(new URL("/sign-in", request.url));
     }
   }
